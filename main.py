@@ -12,8 +12,9 @@ def index():
 
 @app.route('/cpaproxy', methods=['POST'])
 def cpa_proxy():
-    data = request.get_json()
-    if not data or 'proxy' not in data:
+    try:
+        data = request.get_json()
+    except Exception as e:
         return {
             'status': False,
             'message': 'Não foi fornecido um proxy válido. Por favor, envie um JSON com a chave "proxy".'
