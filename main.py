@@ -5,7 +5,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Seja bem-vindo ao Proxy Check! Acesse /proxy-check para verificar sua proxy e IP.'
+    return {
+            'message': 'Seja bem-vindo ao Proxy Check! Acesse /proxy-check para verificar sua proxy e IP.',
+            'criador': '66999407738'
+        }
 
 @app.route('/cpaproxy', methods=['GET'])
 def cpa_proxy():
