@@ -10,10 +10,17 @@ def index():
             'criador': '66999407738'
         }
 
-@app.route('/cpaproxy', methods=['GET'])
+@app.route('/cpaproxy', methods=['POST'])
 def cpa_proxy():
+    data = request.get_json()
+    if not data or 'proxy' not in data:
+        return {
+            'status': False,
+            'message': 'Não foi fornecido um proxy válido. Por favor, envie um JSON com a chave "proxy".'
+        }
+    all_proxy = data['proxy']
     proxys = []
-    all_proxy = ["885.72.241.11:7303:cpaproxyscon:cpaproxyscom"]
+    
     for proxy in all_proxy:
         proxys.append(proxy)
     for proxy in proxys:
@@ -30,7 +37,8 @@ def cpa_proxy():
             return {
                 'status': False,
                 'error': str(e),
-                'message': 'Proxy is not working'
+                'message': 'Proxy inválida ou não funcional.',
+                'proxy': proxy,
             }
 
 def format_proxy(proxy: str) -> dict:
@@ -53,7 +61,6 @@ def check():
             'status': False,
             'client_ip': request.remote_addr
         }
-    return 'Proxy Check'
 
 if __name__ == '__main__':
     app.run(debug=True)
