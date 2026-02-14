@@ -10,8 +10,13 @@ def index():
             'criador': '66999407738'
         }
 
-@app.route('/cpaproxy', methods=['POST'])
+@app.route('/cpaproxy', methods=['POST', 'GET'])
 def cpa_proxy():
+    if request.method == 'GET':
+        return {
+            'status': False,
+            'message': 'Por favor, envie um JSON com a chave "proxy" usando o método POST.'
+        }
     try:
         data = request.get_json()
     except Exception as e:
